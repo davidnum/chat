@@ -1,16 +1,26 @@
 import React from 'react';
-import Loader from 'material-ui/CircularProgress';
+import Loading from 'material-ui/CircularProgress';
+import List from '../../components/List';
+import ListItem from '../../components/ListItem';
+import ChatListItem from '../../containers/ChatListItem';
 
 const ChatsList = ({ loading, error, chats }) => {
-  console.log(loading);
   if (loading) {
-    return (<Loader />);
+    return <List component={Loading} />;
   }
-  return (
-    <div>
-    dsadasdasd
-    </div>
-  );
+
+  if (error !== false) {
+    const ErrorComponent = () => (
+      <ListItem item={'Error!'} />
+    );
+    return <List component={ErrorComponent} />;
+  }
+
+  if (chats !== false) {
+    return <List items={chats} component={ChatListItem} />;
+  }
+
+  return null;
 };
 
 ChatsList.propTypes = {

@@ -1,8 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#025baa',
+    primary2Color: '#1462b3',
+    accent1Color: '#ff7e25',
+  },
+});
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
+  height: 100vh;
   margin: 0 auto;
   display: flex;
   min-height: 100%;
@@ -12,9 +23,11 @@ const AppWrapper = styled.div`
 
 export function App(props) {
   return (
-    <AppWrapper>
-      {React.Children.toArray(props.children)}
-    </AppWrapper>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <AppWrapper>
+        {React.Children.toArray(props.children)}
+      </AppWrapper>
+    </MuiThemeProvider>
   );
 }
 

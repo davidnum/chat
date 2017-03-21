@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectChats, makeSelectError, makeSelectLoading } from './selectors';
 import { loadChats } from './actions';
 import ChatsList from '../../components/ChatsList';
+import Wrapper from './Wrapper';
 
 export class ChatPage extends React.Component {
 
@@ -19,7 +20,9 @@ export class ChatPage extends React.Component {
       chats,
     };
     return (
-      <ChatsList {...chatsListProps} />
+      <Wrapper>
+        <ChatsList {...chatsListProps} />
+      </Wrapper>
     );
   }
 }

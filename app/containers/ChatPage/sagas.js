@@ -5,7 +5,6 @@ import { chatsLoaded, chatsLoadingError } from './actions';
 
 import fetchChats from './requests';
 
-
 export function* getChats() {
   try {
     const chats = yield call(fetchChats);
