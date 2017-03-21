@@ -10,10 +10,12 @@ export function loadChats() {
   };
 }
 
-export function chatsLoaded(chats) {
+export function chatsLoaded(chats, messages, users) {
   return {
     type: LOAD_CHATS_SUCCESS,
     chats,
+    messages,
+    users,
   };
 }
 

@@ -1,6 +1,4 @@
 import { fromJS } from 'immutable';
-import { normalize } from 'normalizr';
-import chatsSchema from './schema';
 import {
   LOAD_CHATS,
   LOAD_CHATS_ERROR,
@@ -22,12 +20,11 @@ function chatPageReducer(state = initialState, action) {
         .set('loading', true)
         .set('error', false);
     case LOAD_CHATS_SUCCESS:
-      const normalized = normalize(action.chats, chatsSchema);
       return state
         .set('loading', false)
-        .set('chats', normalized.entities.chats)
-        .set('messages', normalized.entities.messages)
-        .set('users', normalized.entities.users);
+        .set('chats', action.chats)
+        .set('messages', action.messages)
+        .set('users', action.users);
     case LOAD_CHATS_ERROR:
       return state
         .set('loading', false)

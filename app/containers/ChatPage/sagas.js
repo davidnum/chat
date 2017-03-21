@@ -1,5 +1,7 @@
 import { take, call, put, takeLatest, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import { normalize } from 'normalizr';
+import chatsSchema from './schema';
 import { LOAD_CHATS } from './constants';
 import { chatsLoaded, chatsLoadingError } from './actions';
 
@@ -8,7 +10,8 @@ import fetchChats from './requests';
 export function* getChats() {
   try {
     const chats = yield call(fetchChats);
-    yield put(chatsLoaded(chats));
+    const normalized = yield normalize(chats, chatsSchema);
+    yield put(chatsLoaded(normalized.entities.chats, normalized.entities.messages, normalized.entities.users));
   } catch (err) {
     yield put(chatsLoadingError(err));
   }
