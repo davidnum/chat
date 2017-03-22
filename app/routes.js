@@ -13,7 +13,6 @@ const loadModule = (cb) => (componentModule) => {
 };
 
 export default function createRoutes(store) {
-  // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
 
   return [
@@ -38,7 +37,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/chats/:id',
+      path: '/chats/:chatId',
       name: 'messages',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

@@ -13,11 +13,11 @@ export class ChatListItem extends React.PureComponent { // eslint-disable-line r
     const chat = this.props.item;
     const content = (
       <Wrapper onClick={() => this.props.onChatClick(chat.id)}>
-        <Avatar size={50} src={chat.last_message.user.avatar} />
+        <Avatar size={50} src={chat.user.avatar} />
         <Content>
           <Header>
             <Title>
-              {chat.last_message.user.name}
+              {chat.user.name}
             </Title>
             <Date>
               {formatDate(chat.last_message.created_at)}

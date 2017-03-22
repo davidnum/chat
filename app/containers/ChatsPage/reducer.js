@@ -11,6 +11,7 @@ const initialState = fromJS({
   messages: false,
   loading: false,
   error: false,
+  loadedFromApi: false,
 });
 
 function chatPageReducer(state = initialState, action) {
@@ -22,6 +23,7 @@ function chatPageReducer(state = initialState, action) {
     case LOAD_CHATS_SUCCESS:
       return state
         .set('loading', false)
+        .set('loadedFromApi', true)
         .set('chats', action.chats)
         .set('messages', action.messages)
         .set('users', action.users);

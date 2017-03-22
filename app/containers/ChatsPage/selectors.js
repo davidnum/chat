@@ -31,14 +31,21 @@ const makeSelectLoading = () => createSelector(
   (chatState) => chatState.get('loading'),
 );
 
+const makeSelectLoadedFromApi = () => createSelector(
+  selectChatPageDomain(),
+  (chatState) => chatState.get('loadedFromApi')
+);
+
 const makeSelectError = () => createSelector(
   selectChatPageDomain(),
   (chatState) => chatState.get('error'),
 );
 
 export {
+  selectUsers,
   makeSelectChats,
   selectChatPageDomain,
   makeSelectLoading,
   makeSelectError,
+  makeSelectLoadedFromApi,
 };
