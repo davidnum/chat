@@ -1,10 +1,14 @@
 import { schema } from 'normalizr';
 
 const user = new schema.Entity('users');
-const message = new schema.Entity('messages', {
+const messages = new schema.Entity('messages', {
   user,
 });
 
-const messagesList = [message];
+export const message = new schema.Entity('message', {
+  user,
+});
+
+export const messagesList = [messages];
 
 export default messagesList;

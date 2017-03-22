@@ -10,17 +10,22 @@ const selectMessages = () => createSelector(
   (messagesState) => messagesState.getIn(['messages']),
 );
 
-const selectChatId = () => createSelector(
+const makeSelectChatId = () => createSelector(
   selectMessagesPageDomain(),
   (messagesState) => messagesState.get('chatId'),
 );
 
-const selectMessagesLoading = () => createSelector(
+const makeSelectMessage = () => createSelector(
+  selectMessagesPageDomain(),
+  (messagesState) => messagesState.get('message'),
+);
+
+const makeSelectMessagesLoading = () => createSelector(
   selectMessagesPageDomain(),
   (messagesState) => messagesState.get('loading'),
 );
 
-const selectLoadingError = () => createSelector(
+const makeSelectLoadingError = () => createSelector(
   selectMessagesPageDomain(),
   (messagesState) => messagesState.get('error'),
 );
@@ -28,22 +33,23 @@ const selectLoadingError = () => createSelector(
 const makeSelectMessages = () => createSelector(
   selectMessages(),
   selectUsers(),
-  selectChatId(),
+  makeSelectChatId(),
   normalizeMessages,
 );
 
 const normalizeMessages = (messages, users, chatId) => {
-  if (messages.length > 0) {
-    const ids = Object.values(messages).filter((message) => message.chat_id === chatId);
+  if (messages.size > 0) {
+    const ids = Object.values(messages.toArray()).filter((message) => message.chat_id === chatId);
     return denormalize(ids, messagesSchema, { messages, users });
   }
 
   return [];
 };
 
-
 export {
   makeSelectMessages,
-  selectMessagesLoading,
-  selectLoadingError,
+  makeSelectMessagesLoading,
+  makeSelectLoadingError,
+  makeSelectMessage,
+  makeSelectChatId,
 };

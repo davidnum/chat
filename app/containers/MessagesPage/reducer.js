@@ -3,6 +3,8 @@ import {
   LOAD_MESSAGES,
   LOAD_MESSAGES_ERROR,
   LOAD_MESSAGES_SUCCESS,
+  INPUT_MESSAGE,
+  MESSAGE_SENT,
 } from './constants';
 
 const initialState = fromJS({
@@ -10,6 +12,7 @@ const initialState = fromJS({
   error: false,
   messages: {},
   chatId: null,
+  message: '',
 });
 
 function messagesPageReducer(state = initialState, action) {
@@ -27,6 +30,12 @@ function messagesPageReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
+    case INPUT_MESSAGE:
+      return state
+        .set('message', action.message);
+    case MESSAGE_SENT:
+      return state
+        .updateIn(['messages'], messages => messages.set(action.message.id, action.message));
     default:
       return state;
   }

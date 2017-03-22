@@ -3,7 +3,7 @@ export default [
     id: 32,
     chat_id: 1,
     created_at: 1490119416,
-    text: 'Hi',
+    text: 'Hi! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam corporis, doloribus error eum id illo itaque magni nulla quas quasi quod quos reprehenderit sit veritatis voluptatem. Amet autem dolorum ipsa.',
     user: 2,
   }, {
     id: 38,

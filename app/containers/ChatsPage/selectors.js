@@ -3,6 +3,7 @@ import { denormalize } from 'normalizr';
 import chatsSchema from './schema';
 
 const selectChatPageDomain = () => (state) => state.get('chat');
+const selectGlobalState = () => (state) => state.get('global');
 
 const selectChats = () => createSelector(
   selectChatPageDomain(),
@@ -10,8 +11,8 @@ const selectChats = () => createSelector(
 );
 
 const selectUsers = () => createSelector(
-  selectChatPageDomain(),
-  (chatState) => chatState.getIn(['users']),
+  selectGlobalState(),
+  (globalState) => globalState.getIn(['users']).toJS(),
 );
 
 const selectMessages = () => createSelector(

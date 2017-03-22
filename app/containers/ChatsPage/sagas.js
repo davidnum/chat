@@ -11,7 +11,7 @@ export function* getChats() {
   try {
     const chats = yield call(fetchChats);
     const normalized = yield normalize(chats, chatsSchema);
-    yield put(chatsLoaded(normalized.entities.chats, normalized.entities.messages, normalized.entities.users));
+    yield put(chatsLoaded(normalized.entities.chats, normalized.entities.messages));
   } catch (err) {
     yield put(chatsLoadingError(err));
   }

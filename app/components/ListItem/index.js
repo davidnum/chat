@@ -1,12 +1,9 @@
 import React from 'react';
 import Wrapper from './Wrapper';
-import Item from './Item';
 
 const ListItem = ({ item }) => (
   <Wrapper>
-    <Item>
-      {item}
-    </Item>
+    {item}
   </Wrapper>
 );
 
