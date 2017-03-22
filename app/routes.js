@@ -22,15 +22,35 @@ export default function createRoutes(store) {
       name: 'chat',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/ChatPage/reducer'),
-          import('containers/ChatPage/sagas'),
-          import('containers/ChatPage'),
+          import('containers/ChatsPage/reducer'),
+          import('containers/ChatsPage/sagas'),
+          import('containers/ChatsPage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('chat', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/chats/:id',
+      name: 'messages',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/MessagesPage/reducer'),
+          import('containers/MessagesPage/sagas'),
+          import('containers/MessagesPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('messages', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });

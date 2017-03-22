@@ -6,7 +6,7 @@ import { loadChats } from './actions';
 import ChatsList from '../../components/ChatsList';
 import Wrapper from './Wrapper';
 
-export class ChatPage extends React.Component {
+export class ChatsPage extends React.Component {
 
   componentDidMount() {
     this.props.loadChats();
@@ -27,7 +27,7 @@ export class ChatPage extends React.Component {
   }
 }
 
-ChatPage.propTypes = {
+ChatsPage.propTypes = {
   loadChats: React.PropTypes.func.isRequired,
   chats: React.PropTypes.oneOfType([
     React.PropTypes.array,
@@ -46,4 +46,4 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError(),
 });
 
-export default connect(mapStateToProps, { loadChats })(ChatPage);
+export default connect(mapStateToProps, { loadChats })(ChatsPage);

@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from 'material-ui/CircularProgress';
+import Loading from '../Loading';
 import List from '../../components/List';
 import ListItem from '../../components/ListItem';
 import ChatListItem from '../../containers/ChatListItem';

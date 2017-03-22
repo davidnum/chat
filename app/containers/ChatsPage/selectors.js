@@ -23,7 +23,7 @@ const makeSelectChats = () => createSelector(
   selectChats(),
   selectUsers(),
   selectMessages(),
-  (chats, users, messages) => chats ? denormalize(Object.values(chats), chatsSchema, { chats, users, messages }): false,
+  (chats, users, messages) => chats ? denormalize(Object.values(chats), chatsSchema, { chats, users, messages }) : false,
 );
 
 const makeSelectLoading = () => createSelector(
