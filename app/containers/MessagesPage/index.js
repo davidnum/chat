@@ -1,15 +1,16 @@
-/*
- *
- * MessagesPage
- *
- */
-
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import makeSelectMessagesPage from './selectors';
+import { makeSelectMessages } from './selectors';
+import { loadMessages } from './actions';
 
 export class MessagesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  componentDidMount() {
+    this.props.loadMessages(parseInt(this.props.params.chatId, 10));
+  }
+
+
   render() {
     return (
       <div>
@@ -19,17 +20,17 @@ export class MessagesPage extends React.Component { // eslint-disable-line react
 }
 
 MessagesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  loadMessages: React.PropTypes.func.isRequired,
+  messages: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.array,
+  ]),
+  params: React.PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  MessagesPage: makeSelectMessagesPage(),
+  messages: makeSelectMessages(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesPage);
+export default connect(mapStateToProps, { loadMessages })(MessagesPage);

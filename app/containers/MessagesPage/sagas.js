@@ -1,11 +1,28 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'react-router-redux';
+import { normalize } from 'normalizr';
+import { messagesLoaded, loadingMessagesError } from './actions';
+import { LOAD_MESSAGES } from './constants';
+import messagesSchema from './schema';
+import { fetchMessages } from './requests';
 
-// Individual exports for testing
-export function* defaultSaga() {
-  // See example in containers/HomePage/sagas.js
+export function* getMessages(action) {
+  try {
+    const messages = yield call(fetchMessages, action.chatId);
+    const normalized = yield normalize(messages, messagesSchema);
+    yield put(messagesLoaded(normalized.entities.messages));
+  } catch (err) {
+    yield put(loadingMessagesError(err));
+  }
 }
 
-// All sagas to be loaded
+export function* messagesData() {
+  const watcher = yield takeLatest(LOAD_MESSAGES, getMessages);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
 export default [
-  defaultSaga,
+  messagesData,
 ];
