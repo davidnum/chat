@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import IconButton from 'material-ui/IconButton';
 import SendIcon from 'material-ui/svg-icons/content/send';
-import { makeSelectMessages, makeSelectLoadingError, makeSelectMessagesLoading, makeSelectMessage } from './selectors';
+import {
+  makeSelectMessages, makeSelectLoadingError,
+  makeSelectMessagesLoading, makeSelectMessage,
+  makeSelectMessageSending } from './selectors';
 import { loadMessages, inputMessage, sendMessage } from './actions';
 import { Wrapper, InputWrapper, Input } from './styled';
 import MessagesList from '../../components/MessagesList';
@@ -15,7 +18,7 @@ export class MessagesPage extends React.Component { // eslint-disable-line react
   }
 
   render() {
-    const { loading, error, messages, message, onChangeMessage, onSendClick } = this.props;
+    const { loading, error, messages, message, onChangeMessage, onSendClick, sending } = this.props;
     const messagesListProps = {
       loading,
       error,
@@ -25,8 +28,15 @@ export class MessagesPage extends React.Component { // eslint-disable-line react
       <Wrapper>
         <MessagesList {...messagesListProps} />
         <InputWrapper>
-          <Input placeholder="Напишите сообщение..." value={message} onChange={onChangeMessage}/>
-          <button onClick={onSendClick}>SEND</button>
+          <Input
+            placeholder="Напишите сообщение..."
+            value={message}
+            onChange={onChangeMessage}
+            disabled={sending}
+          />
+          <button onClick={onSendClick} disabled={sending || message.length < 1}>
+            <SendIcon />
+          </button>
         </InputWrapper>
       </Wrapper>
     );
@@ -42,6 +52,7 @@ MessagesPage.propTypes = {
     React.PropTypes.array,
   ]),
   loading: React.PropTypes.bool,
+  sending: React.PropTypes.bool,
   message: React.PropTypes.string,
   error: React.PropTypes.oneOfType([
     React.PropTypes.bool,
@@ -55,15 +66,14 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectMessagesLoading(),
   error: makeSelectLoadingError(),
   message: makeSelectMessage(),
+  sending: makeSelectMessageSending(),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onChangeMessage: (e) => dispatch(inputMessage(e.target.value)),
-    loadMessages: (chatId) => dispatch(loadMessages(chatId)),
-    onSendClick: () => dispatch(sendMessage()),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onChangeMessage: (e) => dispatch(inputMessage(e.target.value)),
+  loadMessages: (chatId) => dispatch(loadMessages(chatId)),
+  onSendClick: () => dispatch(sendMessage()),
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesPage);

@@ -20,6 +20,11 @@ const makeSelectMessage = () => createSelector(
   (messagesState) => messagesState.get('message'),
 );
 
+const makeSelectMessageSending = () => createSelector(
+  selectMessagesPageDomain(),
+  (messagesState) => messagesState.get('messageSending'),
+);
+
 const makeSelectMessagesLoading = () => createSelector(
   selectMessagesPageDomain(),
   (messagesState) => messagesState.get('loading'),
@@ -34,17 +39,19 @@ const makeSelectMessages = () => createSelector(
   selectMessages(),
   selectUsers(),
   makeSelectChatId(),
-  normalizeMessages,
+  denormalizeMessages,
 );
 
-const normalizeMessages = (messages, users, chatId) => {
+const denormalizeMessages = (messages, users, chatId) => {
   if (messages.size > 0) {
-    const ids = Object.values(messages.toArray()).filter((message) => message.chat_id === chatId);
+    const ids = Object.values(messages.toArray()).filter((message) => message.chat_id === chatId).sort(compare);
     return denormalize(ids, messagesSchema, { messages, users });
   }
 
   return [];
 };
+
+const compare = (a, b) => a.created_at - b.created_at;
 
 export {
   makeSelectMessages,
@@ -52,4 +59,5 @@ export {
   makeSelectLoadingError,
   makeSelectMessage,
   makeSelectChatId,
+  makeSelectMessageSending,
 };

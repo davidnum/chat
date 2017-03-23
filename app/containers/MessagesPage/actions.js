@@ -5,6 +5,7 @@ import {
   INPUT_MESSAGE,
   SEND_MESSAGE,
   MESSAGE_SENT,
+  MESSAGE_RECEIVED,
 } from './constants';
 
 export function loadMessages(chatId) {
@@ -31,20 +32,27 @@ export function loadingMessagesError(error) {
 export function inputMessage(message) {
   return {
     type: INPUT_MESSAGE,
-    message
-  }
+    message,
+  };
 }
 
 export function sendMessage() {
   return {
     type: SEND_MESSAGE,
-  }
+  };
 }
 
 export function messageSent(message) {
   return {
     type: MESSAGE_SENT,
-    message
-  }
+    message,
+  };
+}
+
+export function messageReceived(message) {
+  return {
+    type: MESSAGE_RECEIVED,
+    message,
+  };
 }
 

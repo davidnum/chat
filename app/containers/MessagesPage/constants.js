@@ -4,3 +4,4 @@ export const LOAD_MESSAGES_ERROR = 'app/MessagesPage/LOAD_MESSAGES_ERROR';
 export const INPUT_MESSAGE = 'app/MessagesPage/INPUT_MESSAGE';
 export const SEND_MESSAGE = 'app/MessagesPage/SEND_MESSAGE';
 export const MESSAGE_SENT = 'app/MessagesPage/MESSAGE_SENT';
+export const MESSAGE_RECEIVED = 'app/MessagesPage/MESSAGE_RECEIVED';

@@ -15,7 +15,7 @@ const List = ({ component, items, bottom }) => {
   }
   return (
     <Wrapper>
-      <Ul bottom={bottom}>
+      <Ul bottom={bottom} count={items ? items.length : 0}>
         {content}
       </Ul>
     </Wrapper>

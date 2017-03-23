@@ -17,14 +17,14 @@ const selectUsers = () => createSelector(
 
 const selectMessages = () => createSelector(
   selectChatPageDomain(),
-  (chatState) => chatState.getIn(['messages']),
+  (chatState) => chatState.getIn(['messages']).toJS(),
 );
 
 const makeSelectChats = () => createSelector(
   selectChats(),
   selectUsers(),
   selectMessages(),
-  (chats, users, messages) => chats ? denormalize(Object.values(chats), chatsSchema, { chats, users, messages }) : false,
+  (chats, users, messages) => chats.size > 0 ? denormalize(Object.values(chats.toArray()), chatsSchema, { chats, users, messages }).sort(compare) : false,
 );
 
 const makeSelectLoading = () => createSelector(
@@ -42,6 +42,8 @@ const makeSelectError = () => createSelector(
   (chatState) => chatState.get('error'),
 );
 
+const compare = (a, b) => b.last_message.created_at - a.last_message.created_at;
+
 export {
   selectUsers,
   makeSelectChats,
@@ -49,4 +51,5 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectLoadedFromApi,
+  selectChats,
 };
